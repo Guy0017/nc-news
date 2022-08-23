@@ -5,6 +5,7 @@ import Header from "./component/Header";
 import NavigationBar from "./component/NavigationBar";
 import AllArticles from "./component/AllArticles";
 import UserBar from "./component/UserBar";
+import SingleTopics from "./component/SingleTopic"
 import { UserContext } from "./context/UserContext";
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
           <NavigationBar />
           <Routes>
             <Route path="/" element={<AllArticles />} />
+            <Route path="/topics/:topic" element={<SingleTopics />}/>
           </Routes>
           <header className="App-header"></header>
         </div>
