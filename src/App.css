@@ -1,15 +1,83 @@
+Body {
+  background-color: black;
+}
+
 .App {
-  text-align: center;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
   color: white;
+  text-align: center;
+  display: grid;
+  grid-template-areas:
+    'UserBar'
+    'Header'
+    'NavigationBar'
+    'AllArticles';
+
+  grid-template-rows: auto auto auto auto;
 }
 
+.UserBar {
+  margin-top: 6px;
+  margin-left: 6px;
+  grid-area: UserBar;
+  text-align: left;
+}
+
+.Header{
+  grid-area: Header;
+  border-radius: 1rem;
+  border-width: 1rem;
+  font-size:xx-large;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  text-decoration: underline;
+}
+
+.NavigationBar {
+  grid-area: NavigationBar;
+  display: inline;
+  margin-bottom: 8px;
+
+}
+
+.AllArticles {
+  color: gray;
+  text-align: justify;
+  grid-area: AllArticles;
+  border-top: 1px solid grey;
+  padding-bottom: 0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  margin-right: 2rem;
+  margin-left: 0rem;
+  list-style-type: none;
+  
+
+}
+
+.AllArticles--readLink {
+  text-align: end;
+  border: 2px solid gray;
+  margin-left: 84%;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  
+}
+
+.title {
+  color: white;
+  font-size: medium;
+}
+
+.AllArticles--date {
+  margin-left: 43%;
+  color: gray;
+}
+
+.AllArticles--mainTitle {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-right: 8.5%;
+  border: solid white 2px;
+  border-right: -20px;
+
+}
