@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getArticleByID } from "../Api";
 import Vote from "./Vote";
+import Comment from "./Comment";
 
 const SingleArticle = () => {
   const { article_id } = useParams();
@@ -20,28 +21,24 @@ const SingleArticle = () => {
 
   return (
     <>
-    <section className="SingleArticle">
-      <h2 className="SingleArticle--title">TITLE: {article.title}</h2>
-      <br />
-      <label className="SingleArticle--date">
-        Date: {article.created_at.slice(0, 10)}
-      </label>
-      <p>{article.body}</p>
-      <br />
-      <p>
-        By <br />
-        {article.author}
+      <section className="SingleArticle">
+        <h2 className="SingleArticle--title">TITLE: {article.title}</h2>
         <br />
-      </p>
-    <Vote votes={article.votes} article_id={article_id}/>
-    </section>
-    <section>
-        <h2 className="Comments">Comments: {article.comment_count}</h2>
-    </section>
+        <label className="SingleArticle--date">
+          Date: {article.created_at.slice(0, 10)}
+        </label>
+        <p>{article.body}</p>
+        <br />
+        <p>
+          By <br />
+          {article.author}
+          <br />
+        </p>
+        <Vote votes={article.votes} article_id={article_id} />
+      </section>
+      <Comment commentCount={article.comment_count} article_id={article_id} />
     </>
   );
 };
 
 export default SingleArticle;
-
-
