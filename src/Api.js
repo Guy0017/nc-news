@@ -31,3 +31,8 @@ export const getArticleByID = (article_id) => {
       return data.articles[0];
     });
 };
+
+export const patchVote = (userVote, article_id) => {
+  return axios
+    .patch(`https://ncnews-guy.herokuapp.com/api/articles/${article_id}`, {inc_votes: userVote})
+};
