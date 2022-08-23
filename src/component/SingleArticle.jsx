@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getArticleByID } from "../Api";
+import Vote from "./Vote";
 
 const SingleArticle = () => {
   const { article_id } = useParams();
@@ -32,7 +33,7 @@ const SingleArticle = () => {
         {article.author}
         <br />
       </p>
-      <label className="SingleArticle--votes">Votes: {article.votes}</label>
+    <Vote votes={article.votes} article_id={article_id}/>
     </section>
     <section>
         <h2 className="Comments">Comments: {article.comment_count}</h2>

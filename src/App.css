@@ -120,7 +120,7 @@ Body {
 .SingleArticle--votes {
   text-align: end;
   border-bottom: solid grey 2px;
-  margin-left: 79%;
+  margin-left: 77%;
   padding-top: 2px;
   padding-bottom: 2px;
   
@@ -144,3 +144,4 @@ Body {
   border: solid white 2px;
   border-right: -20px;
 }
+
