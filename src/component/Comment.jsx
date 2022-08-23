@@ -3,12 +3,16 @@ import { getCommentsByID } from "../Api";
 
 const Comment = ({ commentCount, article_id }) => {
   const [comments, setComments] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getCommentsByID(article_id).then((articleComments) => {
       setComments(articleComments);
+      setIsLoading(false);
     });
   }, [article_id]);
+
+  if (isLoading) return <p>Loading comments for this article...</p>;
 
   return (
     <>
