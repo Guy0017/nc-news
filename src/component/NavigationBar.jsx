@@ -1,15 +1,28 @@
-import { Link } from "react-router-dom"
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { getAllTopics } from "../Api";
 
 const NavigationBar = () => {
+  const [topics, setTopics] = useState([]);
 
-    return (
-        <section className="NavigationBar">
-        <Link to="">Home</Link>|
-        <Link to="">Cooking</Link>|
-        <Link to="">Coding</Link>|
-        <Link to="">Football</Link>
-        </ section>
-    )
-}
+  useEffect(() => {
+    getAllTopics().then((allTopics) => {
+      setTopics(allTopics);
+    });
+  }, []);
 
-export default NavigationBar
+  return (
+    <section className="NavigationBar">
+      <Link to="/">Home</Link>
+      {topics.map((topic, index) => {
+        return (
+          <Link key={topic.slug} to={`/topics/${topic.slug}`}>
+            {topic.slug[0].toUpperCase() + topic.slug.slice(1)}
+          </Link>
+        );
+      })}
+    </section>
+  );
+};
+
+export default NavigationBar;

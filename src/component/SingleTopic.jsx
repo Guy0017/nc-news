@@ -1,25 +1,27 @@
 import { useState, useEffect } from "react";
-import { getArticles } from "../Api";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { getArticlesByTopic } from "../Api";
 
-const AllArticles = () => {
-  const [articles, setArticles] = useState([]);
+const SingleTopic = () => {
+  const { topic } = useParams();
+  const [filteredArticles, setFilteredArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getArticles().then((allArticles) => {
-      setArticles(allArticles);
+    setIsLoading(true);
+    getArticlesByTopic(topic).then((articlesByTopic) => {
+      setFilteredArticles(articlesByTopic);
       setIsLoading(false);
     });
-  }, []);
+  }, [topic]);
 
-  if (isLoading) return <p>Loading summary of all articles...</p>;
+  if (isLoading) return <p>Loading summary of {topic} articles...</p>;
 
   return (
     <section>
-      <h2 className="AllArticles--mainTitle">Articles</h2>
+      <h2 className="AllArticles--mainTitle">{`${topic[0].toUpperCase() + topic.slice(1)}`} Articles</h2>
       <ul>
-        {articles.map((article) => {
+        {filteredArticles.map((article) => {
           return (
             <li className="AllArticles" key={article.article_id}>
               <h2 className="title">
@@ -47,4 +49,4 @@ const AllArticles = () => {
   );
 };
 
-export default AllArticles;
+export default SingleTopic;
