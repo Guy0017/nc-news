@@ -23,3 +23,11 @@ export const getAllTopics = () => {
       return data.topics;
     });
 };
+
+export const getArticleByID = (article_id) => {
+  return axios
+    .get(`https://ncnews-guy.herokuapp.com/api/articles/${article_id}`)
+    .then(({ data }) => {
+      return data.articles[0];
+    });
+};

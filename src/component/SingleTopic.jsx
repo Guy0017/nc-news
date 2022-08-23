@@ -39,7 +39,7 @@ const SingleTopic = () => {
               <label>Date: {article.created_at.slice(0, 10)}</label>
               <br />
               <section className="AllArticles--readLink">
-                <Link to="">READ</Link>
+                <Link to={`/articles/${article.article_id}`}>READ</Link>
               </section>
             </li>
           );
