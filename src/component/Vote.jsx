@@ -3,16 +3,20 @@ import { patchVote } from "../Api";
 
 const Vote = ({ votes, article_id }) => {
   const [vote, setVote] = useState(votes);
-  const handleVote = (userVote) => {
-    setVote((currentVote) => {
-      return currentVote + userVote;
-    });
+  const [clickedVote, setClickedVote] = useState(false);
 
-    patchVote(userVote, article_id).catch(() => {
+  const handleVote = (userVote) => {
+    if (!clickedVote && vote + userVote !== -1) {
       setVote((currentVote) => {
-        return currentVote - userVote;
+        return currentVote + userVote;
       });
-    });
+      patchVote(userVote, article_id).catch(() => {
+        setVote((currentVote) => {
+          return currentVote - userVote;
+        });
+      });
+      setClickedVote(true);
+    }
   };
 
   return (
