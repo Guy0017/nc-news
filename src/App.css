@@ -39,6 +39,12 @@ Body {
 
 }
 
+.NavigationBar--link {
+
+  margin-left: 50px;
+  margin-right: 5px
+}
+
 .AllArticles {
   color: gray;
   text-align: justify;
@@ -76,7 +82,8 @@ Body {
 .AllArticles--mainTitle {
   padding-top: 10px;
   padding-bottom: 10px;
-  margin-right: 8.5%;
+  margin-right: 7.5%;
+  margin-left: 10%;
   border: solid white 2px;
   border-right: -20px;
 

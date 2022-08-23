@@ -19,8 +19,8 @@ const SingleTopic = () => {
 
   return (
     <section>
+      <h2 className="AllArticles--mainTitle">{`${topic[0].toUpperCase() + topic.slice(1)}`} Articles</h2>
       <ul>
-        <h2 className="AllArticles--mainTitle">Articles</h2>
         {filteredArticles.map((article) => {
           return (
             <li className="AllArticles" key={article.article_id}>

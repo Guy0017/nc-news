@@ -17,8 +17,8 @@ const AllArticles = () => {
 
   return (
     <section>
+      <h2 className="AllArticles--mainTitle">Articles</h2>
       <ul>
-        <h2 className="AllArticles--mainTitle">Articles</h2>
         {articles.map((article) => {
           return (
             <li className="AllArticles" key={article.article_id}>
