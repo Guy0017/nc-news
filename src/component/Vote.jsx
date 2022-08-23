@@ -6,7 +6,7 @@ const Vote = ({ votes, article_id }) => {
   const [clickedVote, setClickedVote] = useState(false);
 
   const handleVote = (userVote) => {
-    if (!clickedVote && vote + userVote !== -1) {
+    if (!clickedVote) {
       setVote((currentVote) => {
         return currentVote + userVote;
       });
