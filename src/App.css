@@ -88,3 +88,59 @@ Body {
   border-right: -20px;
 
 }
+
+.SingleArticle {
+  color: gray;
+  text-align: justify;
+  border-top: 1px solid grey;
+  padding-bottom: 1.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  margin-right: 2rem;
+  margin-left: 2rem;
+  margin-top: 2rem;
+  list-style-type: none;
+  border-top: solid white 2px;
+  border-bottom: solid white 2px;
+}
+
+.SingleArticle--title {
+  text-align: center;
+  color: white;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-right: 7.5%;
+  margin-left: 10%;
+  border: solid white 2px;
+  border-right: -20px;
+  
+
+}
+
+.SingleArticle--votes {
+  text-align: end;
+  border-bottom: solid grey 2px;
+  margin-left: 79%;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  
+}
+
+.SingleArticle--date {
+  text-align: end;
+  margin-left: 57%;
+  
+}
+
+.Comments {
+
+  text-align: center;
+  color: white;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-top: 4rem;
+  margin-right: 10%;
+  margin-left: 9%;
+  border: solid white 2px;
+  border-right: -20px;
+}

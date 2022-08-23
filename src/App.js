@@ -1,12 +1,13 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
+import { UserContext } from "./context/UserContext";
 import Header from "./component/Header";
 import NavigationBar from "./component/NavigationBar";
 import AllArticles from "./component/AllArticles";
 import UserBar from "./component/UserBar";
 import SingleTopics from "./component/SingleTopic"
-import { UserContext } from "./context/UserContext";
+import SingleArticle from "./component/SingleArticle";
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState({
@@ -26,6 +27,7 @@ function App() {
           <Routes>
             <Route path="/" element={<AllArticles />} />
             <Route path="/topics/:topic" element={<SingleTopics />}/>
+            <Route path="/articles/:article_id" element={<SingleArticle />} />
           </Routes>
           <header className="App-header"></header>
         </div>
