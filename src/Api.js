@@ -46,3 +46,10 @@ export const getCommentsByID = (article_id) => {
       return data.comments;
     });
 };
+
+export const patchCommentByID = (user, addCommentInput, article_id) => {
+  return axios.post(
+    `https://ncnews-guy.herokuapp.com/api/articles/${article_id}/comments`,
+    { username: user, body: addCommentInput }
+  );
+};
