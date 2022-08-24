@@ -33,6 +33,16 @@ export const getArticleByID = (article_id) => {
 };
 
 export const patchVote = (userVote, article_id) => {
+  return axios.patch(
+    `https://ncnews-guy.herokuapp.com/api/articles/${article_id}`,
+    { inc_votes: userVote }
+  );
+};
+
+export const getCommentsByID = (article_id) => {
   return axios
-    .patch(`https://ncnews-guy.herokuapp.com/api/articles/${article_id}`, {inc_votes: userVote})
+    .get(`https://ncnews-guy.herokuapp.com/api/articles/${article_id}/comments`)
+    .then(({ data }) => {
+      return data.comments;
+    });
 };
