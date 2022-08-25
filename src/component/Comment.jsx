@@ -38,19 +38,27 @@ const Comment = ({ commentCount, article_id }) => {
 
       return [userComment, ...currentComments];
     });
-    patchCommentByID(loggedInUser.username, addCommentInput, article_id).catch(() => {
-      setComments((currentComments) => {
-        const newComments = [...currentComments].filter(
-          (comment) => comment.comment_id !== "optimisticRender"
-        );
-        return newComments;
-      });
-      alert("Error adding comment. Please post comment again...");
-    });
+    patchCommentByID(loggedInUser.username, addCommentInput, article_id).catch(
+      () => {
+        setComments((currentComments) => {
+          const newComments = [...currentComments].filter(
+            (comment) => comment.comment_id !== "optimisticRender"
+          );
+          return newComments;
+        });
+        alert("Error adding comment. Please post comment again...");
+      }
+    );
   };
 
   useEffect(() => {
     getCommentsByID(article_id).then((articleComments) => {
+      articleComments.sort((objA, objB) => {
+        let compare1 = new Date(objA.created_at);
+        let compare2 = new Date(objB.created_at);
+        return compare1 - compare2;
+      });
+
       setComments(articleComments);
       setIsLoading(false);
     });
