@@ -54,7 +54,6 @@ const SingleTopic = () => {
           <option value="created_at">Date</option>
           <option value="author">Author</option>
           <option value="votes">Votes</option>
-          <option value="topic">Topic</option>
           <option value="comment_count">Comments</option>
         </select>
         <label>Order: </label>

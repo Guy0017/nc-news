@@ -8,17 +8,38 @@ const ChangeUser = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setIsLoading(true);
     getUsers().then((users) => {
-      setUser(users);
+      users.sort((personA, personB) => {
+        let compare1 = personA.name.toLowerCase();
+        let compare2 = personB.name.toLowerCase();
+
+        if (compare1 < compare2) {
+          return -1;
+        }
+
+        if (compare1 > compare2) {
+          return 1;
+        }
+
+        return 0;
+      });
+
+      const filteredUsers = users.filter((person) => {
+        return person.username !== loggedInUser.username;
+      });
+      setUser(filteredUsers);
       setIsLoading(false);
     });
   }, [loggedInUser]);
+
+  if (isLoading) return <p>Loading users...</p>;
 
   return (
     <>
       <section className="CurrentUser">
         <h2 className="User--title">Logged In User:</h2>
-        <p>{loggedInUser.name}</p>
+        <p className="User--name">{loggedInUser.name}</p>
         <p>Username: {loggedInUser.username}</p>
         <img className="User--img" src={loggedInUser.avatar_url}></img>
         <br />
@@ -39,6 +60,8 @@ const ChangeUser = () => {
                   src={person.avatar_url}
                 ></img>
                 <br />
+                <br />
+                <label>Username:</label>
                 <br />
                 <label>{person.username}</label>
                 <br />
