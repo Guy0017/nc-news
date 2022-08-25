@@ -24,10 +24,14 @@ const Comment = ({ commentCount, article_id }) => {
           {comments.map((comment) => {
             return (
               <li className="Comments" key={comment.comment_id}>
-                <p className="Comments--date">{comment.created_at.slice(0, 10)}</p>
+                <p className="Comments--date">
+                  {comment.created_at.slice(0, 10)}
+                </p>
                 <h3>{comment.author}</h3>
-                <p >{comment.body}</p>
-                <label className="Comments--votes">Votes: {comment.votes}</label>
+                <p>{comment.body}</p>
+                <label className="Comments--votes">
+                  Votes: {comment.votes}
+                </label>
               </li>
             );
           })}
