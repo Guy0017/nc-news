@@ -1,16 +1,21 @@
 const axios = require("axios");
 
-export const getArticles = () => {
+export const getArticles = (sortBy, order) => {
   return axios
-    .get("https://ncnews-guy.herokuapp.com/api/articles")
+    .get(
+      `https://ncnews-guy.herokuapp.com/api/articles?sortBy=${sortBy}&&order=${order}`
+    )
     .then(({ data }) => {
       return data.articles;
     });
 };
 
-export const getArticlesByTopic = (topic) => {
+export const getArticlesByTopic = (topic, sortBy, order) => {
   return axios
-    .get(`https://ncnews-guy.herokuapp.com/api/articles?topic=${topic}`)
+
+    .get(
+      `https://ncnews-guy.herokuapp.com/api/articles?topic=${topic}&&sortBy=${sortBy}&&order=${order}`
+    )
     .then(({ data }) => {
       return data.articles;
     });
