@@ -1,5 +1,9 @@
 import { useState, useEffect, useContext } from "react";
-import { getCommentsByID, patchCommentByID } from "../Api";
+import {
+  getCommentsByID,
+  patchCommentByID,
+  deleteCommentByCommentID,
+} from "../Api";
 import { UserContext } from "../context/UserContext";
 
 const Comment = ({ commentCount, article_id }) => {
@@ -51,11 +55,28 @@ const Comment = ({ commentCount, article_id }) => {
     );
   };
 
+  const handleDeleteComment = (clickedComment) => {
+    setComments((currentComments) => {
+      const optimisticComment = [...currentComments].filter(
+        (comment) => comment.comment_id !== clickedComment.comment_id
+      );
+      return optimisticComment;
+    });
+    deleteCommentByCommentID(clickedComment.comment_id).catch(() => {
+      setComments((currentComments) => {
+        const reverseDelete = [clickedComment, ...currentComments];
+
+        return reverseDelete;
+      });
+      alert("Error deleting comment. Please delete comment again...");
+    });
+  };
+
   useEffect(() => {
     getCommentsByID(article_id).then((articleComments) => {
       articleComments.sort((objA, objB) => {
-        let compare1 = new Date(objA.created_at);
-        let compare2 = new Date(objB.created_at);
+        let compare1 = new Date(objB.created_at);
+        let compare2 = new Date(objA.created_at);
         return compare1 - compare2;
       });
 
@@ -103,6 +124,18 @@ const Comment = ({ commentCount, article_id }) => {
                 <label className="Comments--votes">
                   Votes: {comment.votes}
                 </label>
+
+                {comment.author === loggedInUser.username ? (
+                  <button
+                    onClick={() => {
+                      handleDeleteComment(comment);
+                    }}
+                  >
+                    Delete
+                  </button>
+                ) : (
+                  null 
+                )}
               </li>
             );
           })}
