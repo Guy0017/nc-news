@@ -33,3 +33,4 @@ const Vote = ({ votes, article_id }) => {
 };
 
 export default Vote;
+

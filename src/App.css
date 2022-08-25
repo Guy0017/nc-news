@@ -173,3 +173,14 @@ Body {
   padding-top: 2px;
   padding-bottom: 2px;
 }
+
+.addComment {
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.addComment--button {
+  margin-bottom: 1.5rem;
+
+
+}
