@@ -64,3 +64,11 @@ export const deleteCommentByCommentID = (comment_id) => {
     `https://ncnews-guy.herokuapp.com/api/comments/${comment_id}`
   );
 };
+
+export const getUsers = () => {
+  return axios
+    .get("https://ncnews-guy.herokuapp.com/api/users")
+    .then(({ data }) => {
+      return data.users;
+    });
+};

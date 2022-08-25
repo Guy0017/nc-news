@@ -1,17 +1,16 @@
-import { useContext } from "react"
-import { Link } from "react-router-dom"
-import { UserContext } from "../context/UserContext"
+import { useContext } from "react";
+import { Link } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
 
 const UserBar = () => {
+  const { loggedInUser } = useContext(UserContext);
 
-    const { loggedInUser } = useContext(UserContext)
+  return (
+    <section className="UserBar">
+      <label>User: {loggedInUser.name}</label>|
+      <Link to="/users">Change User</Link>
+    </section>
+  );
+};
 
-    return (
-        <section className="UserBar">
-            <label>User: {loggedInUser.name}</label>|
-            <Link to="">Change User</Link>
-        </section> 
-    )
-}
-
-export default UserBar
+export default UserBar;

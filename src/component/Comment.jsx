@@ -133,9 +133,7 @@ const Comment = ({ commentCount, article_id }) => {
                   >
                     Delete
                   </button>
-                ) : (
-                  null 
-                )}
+                ) : null}
               </li>
             );
           })}

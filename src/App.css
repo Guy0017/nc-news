@@ -36,11 +36,9 @@ Body {
   grid-area: NavigationBar;
   display: inline;
   margin-bottom: 8px;
-
 }
 
 .NavigationBar--link {
-
   margin-left: 50px;
   margin-right: 5px
 }
@@ -56,8 +54,6 @@ Body {
   margin-right: 2rem;
   margin-left: 0rem;
   list-style-type: none;
-  
-
 }
 
 .AllArticles--readLink {
@@ -66,7 +62,6 @@ Body {
   margin-left: 84%;
   padding-top: 2px;
   padding-bottom: 2px;
-  
 }
 
 .title {
@@ -86,7 +81,6 @@ Body {
   margin-left: 10%;
   border: solid white 2px;
   border-right: -20px;
-
 }
 
 .SingleArticle {
@@ -113,8 +107,6 @@ Body {
   margin-left: 10%;
   border: solid white 2px;
   border-right: -20px;
-  
-
 }
 
 .SingleArticle--votes {
@@ -133,7 +125,6 @@ Body {
 }
 
 .CommentsCount {
-
   text-align: center;
   color: white;
   padding-top: 10px;
@@ -158,7 +149,6 @@ Body {
   list-style-type: none;
 }
 
-
 .Comments--date {
   text-align: end;
   margin-left: 57%;
@@ -181,6 +171,83 @@ Body {
 
 .addComment--button {
   margin-bottom: 1.5rem;
+}
 
+.User {
+  color: gray;
+  border-top: 1px solid grey;
+  padding-top: 3rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  margin-right: 2rem;
+  margin-left: 0rem;
+  margin-top: 3rem;
+  list-style-type: none;
+}
 
+.User--img {
+  max-width: 300px;
+  max-height: 300px;
+  min-width: 300px;
+  min-height: 300px;
+
+}
+
+.Image {
+  max-width: 200px;
+  max-height: 200px;
+  min-width: 200px;
+  min-height: 200px;
+}
+
+.User--title {
+  text-align: center;
+  color: white;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-right: 7.5%;
+  margin-bottom: 2rem;
+  margin-left: 10%;
+  border-bottom: 2px;
+  border-right: -20px;
+  border: solid white 2px;
+  border-right: -20px;
+}
+
+.User--name {
+  text-align: center;
+  text-decoration: underline;
+  color: white;
+  margin-right: 7.5%;
+  margin-bottom: 2rem;
+  margin-left: 10%;
+  border-bottom: 2px;
+  border-right: -20px;
+}
+
+.User--username{
+  text-align: center;
+  color: white;
+  margin-right: 7.5%;
+  margin-bottom: 2rem;
+  margin-left: 10%;
+  border-bottom: 2px;
+  border-right: -20px;
+  padding-top: 1rem;
+  line-height: 1;
+}
+
+.CurrentUser{
+  color: gray;
+  text-align: center;
+  border-top: 1px solid grey;
+  padding-bottom: 2rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  margin-right: 2rem;
+  margin-left: 2rem;
+  margin-top: 2rem;
+  list-style-type: none;
+  border-top: solid white 2px;
+  border-bottom: solid white 2px;
 }
