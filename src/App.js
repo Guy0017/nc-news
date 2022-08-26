@@ -8,6 +8,7 @@ import AllArticles from "./component/AllArticles";
 import UserBar from "./component/UserBar";
 import SingleTopics from "./component/SingleTopic";
 import SingleArticle from "./component/SingleArticle";
+import ChangeUser from "./component/ChangeUser";
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState({
@@ -28,6 +29,7 @@ function App() {
             <Route path="/" element={<AllArticles />} />
             <Route path="/topics/:topic" element={<SingleTopics />} />
             <Route path="/articles/:article_id" element={<SingleArticle />} />
+            <Route path="/users" element={<ChangeUser />}/>
           </Routes>
           <header className="App-header"></header>
         </div>

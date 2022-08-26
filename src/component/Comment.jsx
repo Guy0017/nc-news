@@ -1,5 +1,9 @@
 import { useState, useEffect, useContext } from "react";
-import { getCommentsByID, patchCommentByID } from "../Api";
+import {
+  getCommentsByID,
+  patchCommentByID,
+  deleteCommentByCommentID,
+} from "../Api";
 import { UserContext } from "../context/UserContext";
 
 const Comment = ({ commentCount, article_id }) => {
@@ -38,19 +42,44 @@ const Comment = ({ commentCount, article_id }) => {
 
       return [userComment, ...currentComments];
     });
-    patchCommentByID(loggedInUser.username, addCommentInput, article_id).catch(() => {
+    patchCommentByID(loggedInUser.username, addCommentInput, article_id).catch(
+      () => {
+        setComments((currentComments) => {
+          const newComments = [...currentComments].filter(
+            (comment) => comment.comment_id !== "optimisticRender"
+          );
+          return newComments;
+        });
+        alert("Error adding comment. Please post comment again...");
+      }
+    );
+  };
+
+  const handleDeleteComment = (clickedComment) => {
+    setComments((currentComments) => {
+      const optimisticComment = [...currentComments].filter(
+        (comment) => comment.comment_id !== clickedComment.comment_id
+      );
+      return optimisticComment;
+    });
+    deleteCommentByCommentID(clickedComment.comment_id).catch(() => {
       setComments((currentComments) => {
-        const newComments = [...currentComments].filter(
-          (comment) => comment.comment_id !== "optimisticRender"
-        );
-        return newComments;
+        const reverseDelete = [clickedComment, ...currentComments];
+
+        return reverseDelete;
       });
-      alert("Error adding comment. Please post comment again...");
+      alert("Error deleting comment. Please delete comment again...");
     });
   };
 
   useEffect(() => {
     getCommentsByID(article_id).then((articleComments) => {
+      articleComments.sort((objA, objB) => {
+        let compare1 = new Date(objB.created_at);
+        let compare2 = new Date(objA.created_at);
+        return compare1 - compare2;
+      });
+
       setComments(articleComments);
       setIsLoading(false);
     });
@@ -95,6 +124,16 @@ const Comment = ({ commentCount, article_id }) => {
                 <label className="Comments--votes">
                   Votes: {comment.votes}
                 </label>
+
+                {comment.author === loggedInUser.username ? (
+                  <button
+                    onClick={() => {
+                      handleDeleteComment(comment);
+                    }}
+                  >
+                    Delete
+                  </button>
+                ) : null}
               </li>
             );
           })}

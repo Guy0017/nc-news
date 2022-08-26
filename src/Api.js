@@ -58,3 +58,17 @@ export const patchCommentByID = (user, addCommentInput, article_id) => {
     { username: user, body: addCommentInput }
   );
 };
+
+export const deleteCommentByCommentID = (comment_id) => {
+  return axios.delete(
+    `https://ncnews-guy.herokuapp.com/api/comments/${comment_id}`
+  );
+};
+
+export const getUsers = () => {
+  return axios
+    .get("https://ncnews-guy.herokuapp.com/api/users")
+    .then(({ data }) => {
+      return data.users;
+    });
+};
