@@ -9,6 +9,7 @@ const SingleTopic = () => {
   const [order, setOrder] = useState("DESC");
   const [sortBy, setSortBy] = useState("created_at");
   const [submitButton, setSubmitButton] = useState(true);
+  const [error, setError] = useState(false)
 
   const handleSort = (event) => {
     event.preventDefault();
@@ -29,13 +30,20 @@ const SingleTopic = () => {
     });
   };
 
-  useEffect(() => {
+  useEffect(() => { 
+    setError(false)
     setIsLoading(true);
     getArticlesByTopic(topic, sortBy, order).then((articlesByTopic) => {
       setFilteredArticles(articlesByTopic);
       setIsLoading(false);
-    });
-  }, [submitButton]);
+    }).catch((err) => {
+      setError({status: err.response.status, msg: err.response.data})
+    })
+  }, [submitButton, topic]);
+
+  if(error) {return (
+    <h2 className="ErrorMsg">[ERROR: {error.status}] {error.msg.msg}</h2>
+    )}
 
   if (isLoading) return <p>Loading summary of {topic} articles...</p>;
 

@@ -7,7 +7,7 @@ export const getArticles = (sortBy, order) => {
     )
     .then(({ data }) => {
       return data.articles;
-    });
+    })
 };
 
 export const getArticlesByTopic = (topic, sortBy, order) => {
@@ -52,7 +52,7 @@ export const getCommentsByID = (article_id) => {
     });
 };
 
-export const patchCommentByID = (user, addCommentInput, article_id) => {
+export const postCommentByID = (user, addCommentInput, article_id) => {
   return axios.post(
     `https://ncnews-guy.herokuapp.com/api/articles/${article_id}/comments`,
     { username: user, body: addCommentInput }

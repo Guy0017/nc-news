@@ -8,19 +8,28 @@ const SingleArticle = () => {
   const { article_id } = useParams();
   const [article, setArticle] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(false)
 
-  useEffect(() => {
+  useEffect(() => { 
     setIsLoading(true);
     getArticleByID(article_id).then((article) => {
       setArticle(article);
       setIsLoading(false);
-    });
+    }).catch((err) => {
+      setError({status: err.response.status, msg: err.response.data})
+    })
   }, [article_id]);
 
-  if (isLoading) return <p>Loading selected article...</p>;
-
+if(error) {
   return (
-    <>
+  <h2 className="ErrorMsg">[ERROR: {error.status}] Article Does Not Exist</h2>
+)}
+
+if (isLoading) return <p>Loading selected article...
+  </p>
+  
+return (
+  <>
       <section className="SingleArticle">
         <h2 className="SingleArticle--title">TITLE: {article.title}</h2>
         <br />

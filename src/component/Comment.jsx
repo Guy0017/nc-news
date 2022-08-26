@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import {
   getCommentsByID,
-  patchCommentByID,
+  postCommentByID,
   deleteCommentByCommentID,
 } from "../Api";
 import { UserContext } from "../context/UserContext";
@@ -10,10 +10,12 @@ const Comment = ({ commentCount, article_id }) => {
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [addCommentInput, setAddCommentInput] = useState();
+  const [error, setError] = useState(false)
   const { loggedInUser } = useContext(UserContext);
 
   const handleAddComment = (event) => {
     event.preventDefault();
+    setError(false)
 
     setComments((currentComments) => {
       const date = new Date();
@@ -42,7 +44,8 @@ const Comment = ({ commentCount, article_id }) => {
 
       return [userComment, ...currentComments];
     });
-    patchCommentByID(loggedInUser.username, addCommentInput, article_id).catch(
+
+    postCommentByID(loggedInUser.username, addCommentInput, article_id).catch(
       () => {
         setComments((currentComments) => {
           const newComments = [...currentComments].filter(
@@ -50,12 +53,13 @@ const Comment = ({ commentCount, article_id }) => {
           );
           return newComments;
         });
-        alert("Error adding comment. Please post comment again...");
+        setError({status: 400, msg: "Error Adding Comment. Please Post Comment Again..."})
       }
     );
   };
 
-  const handleDeleteComment = (clickedComment) => {
+  const handleDeleteComment = (clickedComment) => { 
+    setError(false)
     setComments((currentComments) => {
       const optimisticComment = [...currentComments].filter(
         (comment) => comment.comment_id !== clickedComment.comment_id
@@ -68,11 +72,12 @@ const Comment = ({ commentCount, article_id }) => {
 
         return reverseDelete;
       });
-      alert("Error deleting comment. Please delete comment again...");
+      setError({status: 400, msg: "Error adding comment. Please post comment again..."})
     });
   };
 
   useEffect(() => {
+    setError(false)
     getCommentsByID(article_id).then((articleComments) => {
       articleComments.sort((objA, objB) => {
         let compare1 = new Date(objB.created_at);
@@ -84,6 +89,7 @@ const Comment = ({ commentCount, article_id }) => {
       setIsLoading(false);
     });
   }, [article_id]);
+
 
   if (isLoading) return <p>Loading comments for this article...</p>;
 
@@ -109,6 +115,7 @@ const Comment = ({ commentCount, article_id }) => {
           required
         ></textarea>
         <button className="addComment--button">Add Comment</button>
+        {error ? <h2 className="ErrorMsg">Connection Error: Please Post Again...</h2> :  null}
       </form>
 
       <section>

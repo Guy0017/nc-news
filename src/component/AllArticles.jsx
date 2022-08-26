@@ -28,12 +28,12 @@ const AllArticles = () => {
     });
   };
 
-  useEffect(() => {
+  useEffect(() => { 
     setIsLoading(true);
     getArticles(sortBy, order).then((allArticles) => {
-      setArticles(allArticles);
+      setArticles(allArticles)
       setIsLoading(false);
-    });
+    })
   }, [submitButton]);
 
   if (isLoading) return <p>Loading summary of all articles...</p>;
