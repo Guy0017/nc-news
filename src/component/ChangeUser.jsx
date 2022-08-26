@@ -41,7 +41,7 @@ const ChangeUser = () => {
         <h2 className="User--title">Logged In User:</h2>
         <p className="User--name">{loggedInUser.name}</p>
         <p>Username: {loggedInUser.username}</p>
-        <img className="User--img" src={loggedInUser.avatar_url}></img>
+        <img alt={loggedInUser.name} className="User--img" src={loggedInUser.avatar_url}></img>
         <br />
       </section>
       <section>
