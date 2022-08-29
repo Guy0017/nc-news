@@ -91,7 +91,7 @@ const Comment = ({ commentCount, article_id }) => {
       });
       setError({
         status: 400,
-        msg: "Connection error. Please post comment again...",
+        msg: "Error Deleting Comment. Please Delete Comment Again...",
       });
     });
   };
