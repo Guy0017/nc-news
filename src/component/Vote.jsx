@@ -4,8 +4,10 @@ import { patchVote } from "../Api";
 const Vote = ({ votes, article_id }) => {
   const [vote, setVote] = useState(votes);
   const [clickedVote, setClickedVote] = useState(false);
+  const [error, setError] = useState(false)
 
-  const handleVote = (userVote) => {
+  const handleVote = (userVote) => { 
+    setError(false)
     if (!clickedVote) {
       setVote((currentVote) => {
         return currentVote + userVote;
@@ -14,10 +16,12 @@ const Vote = ({ votes, article_id }) => {
         setVote((currentVote) => {
           return currentVote - userVote;
         });
+        setClickedVote(false)
+        setError({status: 400, msg: "Error Adding Vote. Please Vote Again..."})
       });
       setClickedVote(true);
     }
-  };
+  }; 
 
   return (
     <>
@@ -27,6 +31,9 @@ const Vote = ({ votes, article_id }) => {
           VOTE +1
         </button>
         <button onClick={() => handleVote(-1)}>VOTE -1</button>
+      </section>
+      <section>
+        {error ? <h2 className="ErrorMsg">{error.msg}</h2> : null}
       </section>
     </>
   );
