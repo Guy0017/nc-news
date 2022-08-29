@@ -30,7 +30,6 @@ const Comment = ({ commentCount, article_id }) => {
     if (whiteSpace === inputText.length) {
       setError({ status: 400, msg: "Must Type a Message to Post Comment..." });
     } else {
-
       setComments((currentComments) => {
         const date = new Date();
 
@@ -99,17 +98,23 @@ const Comment = ({ commentCount, article_id }) => {
 
   useEffect(() => {
     setError(false);
-    getCommentsByID(article_id).then((articleComments) => {
-      articleComments.sort((objA, objB) => {
-        let compare1 = new Date(objB.created_at);
-        let compare2 = new Date(objA.created_at);
-        return compare1 - compare2;
-      });
+    getCommentsByID(article_id)
+      .then((articleComments) => {
+        articleComments.sort((objA, objB) => {
+          let compare1 = new Date(objB.created_at);
+          let compare2 = new Date(objA.created_at);
+          return compare1 - compare2;
+        });
 
-      setComments(articleComments);
-      setIsLoading(false);
-    });
+        setComments(articleComments);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        setError({ msg: "Connection Error Getting Comments..." });
+      });
   }, [article_id]);
+
+  if (error) return <h2 className="ErrorMsg">Error: {error.msg}</h2>;
 
   if (isLoading) return <p>Loading comments for this article...</p>;
 

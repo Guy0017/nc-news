@@ -36,14 +36,14 @@ const SingleTopic = () => {
     getArticlesByTopic(topic, sortBy, order).then((articlesByTopic) => {
       setFilteredArticles(articlesByTopic);
       setIsLoading(false);
-    }).catch((err) => {
+    }).catch((err) => { console.log(err)
       setError({status: err.response.status, msg: err.response.data})
     })
   }, [submitButton, topic]);
 
-  if(error) {return (
-    <h2 className="ErrorMsg">[ERROR: {error.status}] {error.msg.msg}</h2>
-    )}
+  if(error) {
+    return <h2 className="ErrorMsg">[ERROR: {error.status}] {error.msg.msg}</h2>
+    }
 
   if (isLoading) return <p>Loading summary of {topic} articles...</p>;
 

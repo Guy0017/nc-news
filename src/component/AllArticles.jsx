@@ -8,6 +8,7 @@ const AllArticles = () => {
   const [order, setOrder] = useState("DESC");
   const [sortBy, setSortBy] = useState("created_at");
   const [submitButton, setSubmitButton] = useState(true);
+  const [error, setError] = useState(false);
 
   const handleSort = (event) => {
     event.preventDefault();
@@ -28,13 +29,22 @@ const AllArticles = () => {
     });
   };
 
-  useEffect(() => { 
+  useEffect(() => {
+    setError(false)
     setIsLoading(true);
-    getArticles(sortBy, order).then((allArticles) => {
-      setArticles(allArticles)
-      setIsLoading(false);
-    })
+    getArticles(sortBy, order)
+      .then((allArticles) => {
+        setArticles(allArticles);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        setError({ msg: "Connection Error Getting Articles..." });
+      });
   }, [submitButton]);
+
+  if (error) {
+    return <h2 className="ErrorMsg">Error: {error.msg}</h2>;
+  }
 
   if (isLoading) return <p>Loading summary of all articles...</p>;
 
