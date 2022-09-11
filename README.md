@@ -21,15 +21,21 @@ The repository for the frontend can be found on: https://github.com/Guy0017/nc-n
 
 Enter the following terminal command to clone the respository locally:
 
+```bash
 $ git clone https://github.com/Guy0017/nc-news.git
+```
 
 Enter the following command to install all dependencies in the package.json:
 
+```bash
 $ npm install
+```
 
 Enter the following command to start the application:
 
+```bash
 $ npm start
+```
 
 The repository for the backend can be found on: https://github.com/Guy0017/ncnews
 
