@@ -30,7 +30,7 @@ const Vote = ({ votes, article_id }) => {
         <button className="buttonVote" onClick={() => handleVote(1)}>
           VOTE +1
         </button>
-        <button onClick={() => handleVote(-1)}>VOTE -1</button>
+        <button className="buttonVote"onClick={() => handleVote(-1)}>VOTE -1</button>
       </section>
       <section>
         {error ? <h2 className="ErrorMsg">{error.msg}</h2> : null}

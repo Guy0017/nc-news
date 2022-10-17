@@ -89,8 +89,8 @@ const AllArticles = () => {
               <label>Comments: {article.comment_count}</label>
               <br />
               <label>Votes: {article.votes}</label>
-              <section className="AllArticles--readLink">
-                <Link to={`/articles/${article.article_id}`}>READ</Link>
+              <section>
+                <Link to={`/articles/${article.article_id}`} className="linkAndbutton">READ</Link>
               </section>
             </li>
           );

@@ -7,8 +7,8 @@ const UserBar = () => {
 
   return (
     <section className="UserBar">
-      <label>User: {loggedInUser.name}</label>|
-      <Link to="/users">Change User</Link>
+      <label>User: {loggedInUser.name}</label>
+      <Link className="changeUserLink" to="/users">Change User</Link>
     </section>
   );
 };

@@ -125,7 +125,8 @@ const Comment = ({ commentCount, article_id }) => {
       </section>
 
       <form onSubmit={handleAddComment}>
-        <label>Write a comment:</label>
+        <section>
+        <p>Write a comment:</p>
         <textarea
           value={addCommentInput}
           onChange={(event) => {
@@ -139,6 +140,7 @@ const Comment = ({ commentCount, article_id }) => {
           placeholder="Write comment here..."
           required
         ></textarea>
+        </section>
         <button className="addComment--button">Add Comment</button>
         {error ? <h2 className="ErrorMsg">Error: {error.msg}</h2> : null}
       </form>
@@ -156,12 +158,11 @@ const Comment = ({ commentCount, article_id }) => {
                 <label className="Comments--votes">
                   Votes: {comment.votes}
                 </label>
-
                 {comment.author === loggedInUser.username ? (
                   <button
                     onClick={() => {
                       handleDeleteComment(comment);
-                    }}
+                    }} className="linkAndbutton"
                   >
                     Delete
                   </button>
