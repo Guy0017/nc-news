@@ -66,7 +66,7 @@ const ChangeUser = () => {
                 <label>{person.username}</label>
                 <br />
                 <br />
-                <button
+                <button className="changeUserButton"
                   onClick={() => {
                     setLoggedInUser(person);
                   }}

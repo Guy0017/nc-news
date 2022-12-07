@@ -13,10 +13,10 @@ const NavigationBar = () => {
 
   return (
     <section className="NavigationBar">
-      <Link to="/">Home</Link>
+      <Link to="/" className="NavigationBar--link">Home</Link>
       {topics.map((topic, index) => {
         return (
-          <Link key={topic.slug} to={`/topics/${topic.slug}`}>
+          <Link key={topic.slug} to={`/topics/${topic.slug}`} className="NavigationBar--link">
             {topic.slug[0].toUpperCase() + topic.slug.slice(1)}
           </Link>
         );
