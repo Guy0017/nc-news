@@ -1,9 +1,9 @@
 const axios = require("axios");
-const hostDomain = "https://ncnews-guy.cyclic.app/api";
+const hostDomain = "https://ncnews-guy.cyclic.app";
 
 export const getArticles = (sortBy, order) => {
   return axios
-    .get(`${hostDomain}/articles?sortBy=${sortBy}&&order=${order}`)
+    .get(`${hostDomain}/api/articles?sortBy=${sortBy}&&order=${order}`)
     .then(({ data }) => {
       return data.articles;
     });
