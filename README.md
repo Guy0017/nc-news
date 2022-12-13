@@ -12,8 +12,9 @@ It has the following functionality:
 
 This frontend project is hosted on Netlify: https://ncnews-guy.netlify.app/
 
-The backend project is hosted on Heroku:
-https://ncnews-guy.herokuapp.com/api/
+The backend project is hosted on ElephantSQL(database) and Cyclic(API):
+
+https://ncnews-guy.cyclic.app/api
 
 ## Clone
 
