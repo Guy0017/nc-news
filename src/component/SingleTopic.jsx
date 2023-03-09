@@ -59,7 +59,7 @@ const SingleTopic = () => {
       >
         <label>Sort By: </label>
         <select>
-          <option value="created_at">Date</option>
+          <option selected value="created_at">Date</option>
           <option value="author">Author</option>
           <option value="votes">Votes</option>
           <option value="comment_count">Comments</option>

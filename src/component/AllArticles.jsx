@@ -58,14 +58,14 @@ const AllArticles = () => {
       >
         <label>Sort By: </label>
         <select>
-          <option value="created_at">Date</option>
+          <option selected value="created_at">Date</option>
           <option value="author">Author</option>
           <option value="votes">Votes</option>
           <option value="topic">Topic</option>
           <option value="comment_count">Comments</option>
         </select>
         <label>Order: </label>
-        <button onClick={handleSort}>DESC</button>
+        <button onClick={handleSort}>{order}</button>
 
         <button>Search</button>
       </form>
