@@ -57,7 +57,7 @@ const AllArticles = () => {
         }}
       >
         <label>Sort By: </label>
-        <select>
+        <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
           <option selected value="created_at">Date</option>
           <option value="author">Author</option>
           <option value="votes">Votes</option>
