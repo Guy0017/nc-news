@@ -14,11 +14,8 @@ const SingleTopic = () => {
   const handleSort = (event) => {
     event.preventDefault();
 
-    event.target.innerText === "DESC"
-      ? (event.target.innerText = "ASC")
-      : (event.target.innerText = "DESC");
+    order === "DESC" ? setOrder("ASC") : setOrder("DESC")
 
-    setOrder(event.target.innerText);
   };
 
   const handleSubmit = (event) => {
@@ -59,7 +56,7 @@ const SingleTopic = () => {
       >
         <label>Sort By: </label>
         <select value={sortBy} onChange={(e) => {setSortBy(e.target.value)}}>
-          <option selected value="created_at">Date</option>
+          <option value="created_at">Date</option>
           <option value="author">Author</option>
           <option value="votes">Votes</option>
           <option value="comment_count">Comments</option>
