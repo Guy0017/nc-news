@@ -1,10 +1,10 @@
 const axios = require("axios");
 const hostDomain = "https://ncnews-guy.cyclic.app";
 
-export const getArticles = (sortBy, order) => {
+export const getArticles = (sortBy, order, p) => { 
   return axios
-    .get(`${hostDomain}/api/articles?sortBy=${sortBy}&&order=${order}`)
-    .then(({ data }) => {
+    .get(`${hostDomain}/api/articles?sortBy=${sortBy}&&order=${order}&&p=${p}`)
+    .then(({ data }) => { 
       return data.articles;
     });
 };

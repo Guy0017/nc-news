@@ -289,6 +289,19 @@ Body {
   border-right: -20px;
 }
 
+.pagination--page {
+  margin-bottom: 4em;
+}
+
+.pagination--button {
+  text-align: end;
+  border: 2px solid gray;
+  background-color: white;
+  margin-top: 2em;
+  padding: 3px;
+
+}
+
 @media screen and (min-width: 600px) {
   .AllArticles {
     color: gray;
