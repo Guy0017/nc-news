@@ -9,12 +9,14 @@ const AllArticles = () => {
   const [sortBy, setSortBy] = useState("created_at");
   const [submitButton, setSubmitButton] = useState(true);
   const [error, setError] = useState(false);
+  const [page, setPage] = useState(1);
+  const [disableNext, setDisableNext] = useState(false);
+  const [cache, setCache] = useState({});
 
   const handleSort = (event) => {
     event.preventDefault();
 
-    order === "DESC" ? setOrder("ASC") : setOrder("DESC")
-
+    order === "DESC" ? setOrder("ASC") : setOrder("DESC");
   };
 
   const handleSubmit = (event) => {
@@ -26,18 +28,48 @@ const AllArticles = () => {
     });
   };
 
+  const loadNextPage = () => {
+    if (page * 10 + 10 > articles[0].total_count) {
+      setDisableNext(true);
+    }
+
+    setPage(page + 1);
+  };
+
+  const loadPrevPage = () => {
+    setDisableNext(false);
+
+    setPage(page - 1);
+  };
+
   useEffect(() => {
-    setError(false)
+    setError(false);
     setIsLoading(true);
-    getArticles(sortBy, order)
-      .then((allArticles) => {
-        setArticles(allArticles);
-        setIsLoading(false);
-      })
-      .catch(() => {
-        setError({ msg: "Connection Error Getting Articles..." });
-      });
-  }, [submitButton]);
+
+    if (cache[page]) {
+      setArticles(cache[page]);
+      setIsLoading(false);
+    } else {
+      getArticles(sortBy, order, page)
+        .then((allArticles) => {
+          setArticles(allArticles);
+
+          setCache((currCache) => {
+            const newCache = { ...currCache };
+
+            newCache[page] = allArticles;
+
+            return newCache;
+          });
+
+          setIsLoading(false);
+        })
+        .catch(() => {
+          setError({ msg: "Connection Error Getting Articles..." });
+        });
+    }
+    console.log(articles);
+  }, [submitButton, page]);
 
   if (error) {
     return <h2 className="ErrorMsg">Error: {error.msg}</h2>;
@@ -87,12 +119,30 @@ const AllArticles = () => {
               <br />
               <label>Votes: {article.votes}</label>
               <section>
-                <Link to={`/articles/${article.article_id}`} className="linkAndbutton">READ</Link>
+                <Link
+                  to={`/articles/${article.article_id}`}
+                  className="linkAndbutton"
+                >
+                  READ
+                </Link>
               </section>
             </li>
           );
         })}
       </ul>
+      {page > 1 ? (
+        <button className="pagination--button" onClick={loadPrevPage}>
+          Prev
+        </button>
+      ) : null}
+      <button
+        className="pagination--button"
+        disabled={disableNext}
+        onClick={loadNextPage}
+      >
+        Next
+      </button>
+      <p className="pagination--page">Page: {page}</p>
     </section>
   );
 };
