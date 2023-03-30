@@ -9,10 +9,10 @@ export const getArticles = (sortBy, order, p) => {
     });
 };
 
-export const getArticlesByTopic = (topic, sortBy, order) => {
+export const getArticlesByTopic = (topic, sortBy, order, p) => { 
   return axios
     .get(
-      `${hostDomain}/api/articles?topic=${topic}&&sortBy=${sortBy}&&order=${order}`
+      `${hostDomain}/api/articles?topic=${topic}&&sortBy=${sortBy}&&order=${order}&&p=${p}`
     )
     .then(({ data }) => {
       return data.articles;

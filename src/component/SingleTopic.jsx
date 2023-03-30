@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getArticlesByTopic } from "../Api";
+import Pagination from "./Pagination";
 
 const SingleTopic = () => {
   const { topic } = useParams();
@@ -9,13 +10,36 @@ const SingleTopic = () => {
   const [order, setOrder] = useState("DESC");
   const [sortBy, setSortBy] = useState("created_at");
   const [submitButton, setSubmitButton] = useState(true);
-  const [error, setError] = useState(false)
+  const [error, setError] = useState(false);
+  const [page, setPage] = useState(1);
+  const [disableNext, setDisableNext] = useState(false);
+  const [currTopic, setCurrTopic] = useState(topic);
+
+  const load = () => {
+    setError(false);
+    setIsLoading(true);
+
+    if (currTopic !== topic) {
+      setPage(1);
+      setCurrTopic(topic);
+    }
+
+    getArticlesByTopic(topic, sortBy, order, page)
+      .then((articlesByTopic) => {
+        setFilteredArticles(articlesByTopic);
+
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setError({ status: err.response.status, msg: err.response.data });
+      });
+  };
 
   const handleSort = (event) => {
     event.preventDefault();
 
-    order === "DESC" ? setOrder("ASC") : setOrder("DESC")
-
+    order === "DESC" ? setOrder("ASC") : setOrder("DESC");
   };
 
   const handleSubmit = (event) => {
@@ -27,20 +51,17 @@ const SingleTopic = () => {
     });
   };
 
-  useEffect(() => { 
-    setError(false)
-    setIsLoading(true);
-    getArticlesByTopic(topic, sortBy, order).then((articlesByTopic) => {
-      setFilteredArticles(articlesByTopic);
-      setIsLoading(false);
-    }).catch((err) => { console.log(err)
-      setError({status: err.response.status, msg: err.response.data})
-    })
-  }, [submitButton, topic]);
+  useEffect(() => {
+    load();
+  }, [submitButton, topic, page]);
 
-  if(error) {
-    return <h2 className="ErrorMsg">[ERROR: {error.status}] {error.msg.msg}</h2>
-    }
+  if (error) {
+    return (
+      <h2 className="ErrorMsg">
+        [ERROR: {error.status}] {error.msg.msg}
+      </h2>
+    );
+  }
 
   if (isLoading) return <p>Loading summary of {topic} articles...</p>;
 
@@ -55,7 +76,12 @@ const SingleTopic = () => {
         }}
       >
         <label>Sort By: </label>
-        <select value={sortBy} onChange={(e) => {setSortBy(e.target.value)}}>
+        <select
+          value={sortBy}
+          onChange={(e) => {
+            setSortBy(e.target.value);
+          }}
+        >
           <option value="created_at">Date</option>
           <option value="author">Author</option>
           <option value="votes">Votes</option>
@@ -86,12 +112,24 @@ const SingleTopic = () => {
               <br />
               <label>Votes: {article.votes}</label>
               <section>
-                <Link to={`/articles/${article.article_id}`} className="linkAndbutton">READ</Link>
+                <Link
+                  to={`/articles/${article.article_id}`}
+                  className="linkAndbutton"
+                >
+                  READ
+                </Link>
               </section>
             </li>
           );
         })}
       </ul>
+      <Pagination
+        page={page}
+        setPage={setPage}
+        articles={filteredArticles}
+        disableNext={disableNext}
+        setDisableNext={setDisableNext}
+      />
     </section>
   );
 };
