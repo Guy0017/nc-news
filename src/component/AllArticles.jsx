@@ -11,7 +11,6 @@ const AllArticles = () => {
   const [submitButton, setSubmitButton] = useState(true);
   const [error, setError] = useState(false);
   const [page, setPage] = useState(1);
-  const [disableNext, setDisableNext] = useState(false);
 
   const load = () => {
     setError(false);
@@ -43,7 +42,8 @@ const AllArticles = () => {
   };
 
   useEffect(() => {
-    load()
+    load();
+    // eslint-disable-next-line
   }, [submitButton, page]);
 
   if (error) {
@@ -105,13 +105,7 @@ const AllArticles = () => {
           );
         })}
       </ul>
-      <Pagination
-        page={page}
-        setPage={setPage}
-        articles={articles}
-        disableNext={disableNext}
-        setDisableNext={setDisableNext}
-      />
+      <Pagination page={page} setPage={setPage} articles={articles} />
     </section>
   );
 };

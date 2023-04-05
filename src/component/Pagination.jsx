@@ -1,45 +1,40 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
-const Pagination = ({
-  page,
-  setPage,
-  articles,
-  disableNext,
-  setDisableNext,
-}) => {
-  const loadNextPage = () => {
-    // if (page * 10 + 10 > articles[0].total_count) {
-    //   setDisableNext(true);
-    // } 
+const Pagination = ({ page, setPage, articles }) => {
+  const [disableNext, setDisableNext] = useState(false);
 
-    setPage(page + 1);
+  const load = () => {
+    const maxPage = Math.ceil(articles[0].total_count / 10) * 10;
+
+    page * 10 >= maxPage ? setDisableNext(true) : setDisableNext(false);
   };
 
-  const loadPrevPage = () => {
-    // setDisableNext(false);
-
-    setPage(page - 1);
+  const loadPage = (change) => {
+    setPage(page + change);
   };
 
-  useEffect(() => {    
-
-    const maxPage = Math.ceil(articles[0].total_count / 10) * 10
-    
-    page * 10 >= maxPage ? setDisableNext(true) :  setDisableNext(false)
-
-}, [page])
+  useEffect(() => {
+    load();
+  }, [page]);
 
   return (
     <>
       {page > 1 ? (
-        <button className="pagination--button" onClick={loadPrevPage}>
+        <button
+          className="pagination--button"
+          onClick={() => {
+            loadPage(-1);
+          }}
+        >
           Prev
         </button>
       ) : null}
       <button
         className="pagination--button"
         disabled={disableNext}
-        onClick={loadNextPage}
+        onClick={() => {
+          loadPage(1);
+        }}
       >
         Next
       </button>
