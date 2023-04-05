@@ -5,13 +5,33 @@ import {
   deleteCommentByCommentID,
 } from "../Api";
 import { UserContext } from "../context/UserContext";
+import Pagination from "./Pagination";
 
 const Comment = ({ commentCount, article_id }) => {
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [addCommentInput, setAddCommentInput] = useState();
   const [error, setError] = useState(false);
+  const [page, setPage] = useState(1);
   const { loggedInUser } = useContext(UserContext);
+
+  const load = () => {
+    setError(false);
+    getCommentsByID(article_id, page)
+      .then((articleComments) => {
+        articleComments.sort((objA, objB) => {
+          let compare1 = new Date(objB.created_at);
+          let compare2 = new Date(objA.created_at);
+          return compare1 - compare2;
+        });
+
+        setComments(articleComments);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        setError({ msg: "Connection Error Getting Comments..." });
+      });
+  };
 
   const handleAddComment = (event) => {
     event.preventDefault();
@@ -97,22 +117,9 @@ const Comment = ({ commentCount, article_id }) => {
   };
 
   useEffect(() => {
-    setError(false);
-    getCommentsByID(article_id)
-      .then((articleComments) => {
-        articleComments.sort((objA, objB) => {
-          let compare1 = new Date(objB.created_at);
-          let compare2 = new Date(objA.created_at);
-          return compare1 - compare2;
-        });
-
-        setComments(articleComments);
-        setIsLoading(false);
-      })
-      .catch(() => {
-        setError({ msg: "Connection Error Getting Comments..." });
-      });
-  }, [article_id]);
+    load();
+    // eslint-disable-next-line
+  }, [article_id, page]);
 
   if (error) return <h2 className="ErrorMsg">Error: {error.msg}</h2>;
 
@@ -126,20 +133,20 @@ const Comment = ({ commentCount, article_id }) => {
 
       <form onSubmit={handleAddComment}>
         <section>
-        <p>Write a comment:</p>
-        <textarea
-          value={addCommentInput}
-          onChange={(event) => {
-            setAddCommentInput(event.target.value);
-          }}
-          className="addComment"
-          name="addComment"
-          id="addComment"
-          cols="45"
-          rows="13"
-          placeholder="Write comment here..."
-          required
-        ></textarea>
+          <p>Write a comment:</p>
+          <textarea
+            value={addCommentInput}
+            onChange={(event) => {
+              setAddCommentInput(event.target.value);
+            }}
+            className="addComment"
+            name="addComment"
+            id="addComment"
+            cols="45"
+            rows="13"
+            placeholder="Write comment here..."
+            required
+          ></textarea>
         </section>
         <button className="addComment--button">Add Comment</button>
         {error ? <h2 className="ErrorMsg">Error: {error.msg}</h2> : null}
@@ -162,7 +169,8 @@ const Comment = ({ commentCount, article_id }) => {
                   <button
                     onClick={() => {
                       handleDeleteComment(comment);
-                    }} className="linkAndbutton"
+                    }}
+                    className="linkAndbutton"
                   >
                     Delete
                   </button>
@@ -171,6 +179,7 @@ const Comment = ({ commentCount, article_id }) => {
             );
           })}
         </ul>
+        <Pagination page={page} setPage={setPage} articles={comments} />
       </section>
     </>
   );

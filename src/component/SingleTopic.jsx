@@ -12,7 +12,6 @@ const SingleTopic = () => {
   const [submitButton, setSubmitButton] = useState(true);
   const [error, setError] = useState(false);
   const [page, setPage] = useState(1);
-  const [disableNext, setDisableNext] = useState(false);
   const [currTopic, setCurrTopic] = useState(topic);
 
   const load = () => {
@@ -53,6 +52,7 @@ const SingleTopic = () => {
 
   useEffect(() => {
     load();
+    // eslint-disable-next-line
   }, [submitButton, topic, page]);
 
   if (error) {
@@ -123,13 +123,7 @@ const SingleTopic = () => {
           );
         })}
       </ul>
-      <Pagination
-        page={page}
-        setPage={setPage}
-        articles={filteredArticles}
-        disableNext={disableNext}
-        setDisableNext={setDisableNext}
-      />
+      <Pagination page={page} setPage={setPage} articles={filteredArticles} />
     </section>
   );
 };

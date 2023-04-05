@@ -40,9 +40,9 @@ export const patchVote = (userVote, article_id) => {
   });
 };
 
-export const getCommentsByID = (article_id) => {
+export const getCommentsByID = (article_id, p) => { 
   return axios
-    .get(`${hostDomain}/api/articles/${article_id}/comments`)
+    .get(`${hostDomain}/api/articles/${article_id}/comments?p=${p}`)
     .then(({ data }) => {
       return data.comments;
     });
