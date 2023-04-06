@@ -129,14 +129,6 @@ Body {
   border-right: -20px;
 }
 
-.SingleArticle--votes {
-  text-align: end;
-  border-bottom: solid grey 2px;
-  margin-left: 77%;
-  padding-top: 2px;
-  padding-bottom: 2px;
-}
-
 .SingleArticle--date {
   text-align: end;
 }
@@ -171,7 +163,7 @@ Body {
   padding: 0;
 }
 
-.Comments--votes {
+.Votes {
   text-align: end;
   border-bottom: solid grey 2px;
   margin-left: 75%;
@@ -179,11 +171,25 @@ Body {
   padding-bottom: 2px;
 }
 
+.voteButton--container {
+  padding-left: 59.8%;
+}
+
 .buttonVote {
   text-align: end;
   border: 2px solid gray;
   margin-top: 2em;
+
   margin-right: 0.5em;
+  padding: 3px;
+}
+
+.deleteButton {
+  text-align: end;
+  border: 2px solid gray;
+  background-color: white;
+  margin-left: 2%;
+  margin-top: 2em;
   padding: 3px;
 }
 
@@ -390,8 +396,12 @@ Body {
     text-align: end;
     margin-right: 5%;
   }
+
+  .voteButton--container {
+    margin-left: 10%;
+  }
   
-  .Comments--votes {
+  .Votes {
     text-align: end;
     margin-right: 5%;
     padding-top: 2px;
