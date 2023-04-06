@@ -6,6 +6,7 @@ import {
 } from "../Api";
 import { UserContext } from "../context/UserContext";
 import Pagination from "./Pagination";
+import Vote from "./Vote";
 
 const Comment = ({ commentCount, article_id }) => {
   const [comments, setComments] = useState([]);
@@ -151,7 +152,6 @@ const Comment = ({ commentCount, article_id }) => {
         <button className="addComment--button">Add Comment</button>
         {error ? <h2 className="ErrorMsg">Error: {error.msg}</h2> : null}
       </form>
-
       <section>
         <ul>
           {comments.map((comment) => {
@@ -162,19 +162,21 @@ const Comment = ({ commentCount, article_id }) => {
                 </p>
                 <h3>{comment.author}</h3>
                 <p>{comment.body}</p>
-                <label className="Comments--votes">
-                  Votes: {comment.votes}
-                </label>
                 {comment.author === loggedInUser.username ? (
                   <button
                     onClick={() => {
                       handleDeleteComment(comment);
                     }}
-                    className="linkAndbutton"
+                    className="deleteButton"
                   >
                     Delete
                   </button>
                 ) : null}
+                <Vote
+                  type="comment"
+                  votes={comment.votes}
+                  id={comment.comment_id}
+                />
               </li>
             );
           })}
