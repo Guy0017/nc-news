@@ -8,7 +8,12 @@ const UserBar = () => {
   return (
     <section className="UserBar">
       <label>User: {loggedInUser.name}</label>
-      <Link className="changeUserLink" to="/users">Change User</Link>
+      <Link className="changeUserLink" to="/users">
+        Change User
+      </Link>
+      <Link className="postLink" to="/articles/post">
+        POST
+      </Link>
     </section>
   );
 };

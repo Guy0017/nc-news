@@ -1,5 +1,6 @@
 const axios = require("axios");
-const hostDomain = "https://ncnews-guy.cyclic.app";
+// const hostDomain = "https://ncnews-guy.cyclic.app";
+const hostDomain = "http://localhost:9090";
 
 export const getArticles = (sortBy, order, p) => {
   return axios
@@ -39,7 +40,7 @@ export const patchArticleVote = (userVote, article_id) => {
   });
 };
 
-export const patchCommentVote = (userVote, comment_id) => { 
+export const patchCommentVote = (userVote, comment_id) => {
   return axios.patch(`${hostDomain}/api/comments/${comment_id}`, {
     inc_votes: userVote,
   });
@@ -68,4 +69,12 @@ export const getUsers = () => {
   return axios.get(`${hostDomain}/api/users`).then(({ data }) => {
     return data.users;
   });
+};
+
+export const postNewArticle = (author, title, body, topic) => {
+  return axios
+    .post(`${hostDomain}/api/articles`, { author, title, body, topic })
+    .then(({ data }) => {
+      return data;
+    });
 };

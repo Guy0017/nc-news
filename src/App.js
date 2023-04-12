@@ -10,6 +10,7 @@ import SingleTopics from "./component/SingleTopic";
 import SingleArticle from "./component/SingleArticle";
 import ChangeUser from "./component/ChangeUser";
 import ErrorPage from "./component/ErrorPage";
+import PostArticle from "./component/PostArticle";
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState({
@@ -30,10 +31,10 @@ function App() {
             <Route path="/" element={<AllArticles />} />
             <Route path="/topics/:topic" element={<SingleTopics />} />
             <Route path="/articles/:article_id" element={<SingleArticle />} />
+            <Route path="/articles/post" element={<PostArticle />} />
             <Route path="/users" element={<ChangeUser />}/>
             <Route path="*" element={<ErrorPage />} />
           </Routes>
-          <header className="App-header"></header>
         </div>
       </UserContext.Provider>
     </BrowserRouter>

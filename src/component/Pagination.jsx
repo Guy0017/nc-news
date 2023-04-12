@@ -4,7 +4,9 @@ const Pagination = ({ page, setPage, articles }) => {
   const [disableNext, setDisableNext] = useState(false);
 
   const load = () => {
-    const maxPage = Math.ceil(articles[0].total_count / 10) * 10;
+    const maxPage = articles[0]
+      ? Math.ceil(articles[0].total_count / 10) * 10
+      : 0;
 
     page * 10 >= maxPage ? setDisableNext(true) : setDisableNext(false);
   };
