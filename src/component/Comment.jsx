@@ -7,6 +7,7 @@ import {
 import { UserContext } from "../context/UserContext";
 import Pagination from "./Pagination";
 import Vote from "./Vote";
+import { checkIsBlank } from "../utils/utils";
 
 const Comment = ({ commentCount, article_id }) => {
   const [comments, setComments] = useState([]);
@@ -29,7 +30,8 @@ const Comment = ({ commentCount, article_id }) => {
         setComments(articleComments);
         setIsLoading(false);
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log(error);
         setError({ msg: "Connection Error Getting Comments..." });
       });
   };
@@ -38,62 +40,55 @@ const Comment = ({ commentCount, article_id }) => {
     event.preventDefault();
     setError(false);
 
-    const inputText = event.target[0].value;
+    const isEmpty = checkIsBlank("comment", event.target[0].value);
 
-    let whiteSpace = 0;
+    if (isEmpty) {
+      setError(isEmpty);
+      return;
+    }
 
-    for (let i = 0; i < inputText.length; i++) {
-      if (inputText[i] === " ") {
-        whiteSpace++;
+    setComments((currentComments) => {
+      const date = new Date();
+
+      let month = date.getMonth().toString();
+      let day = date.getDate().toString();
+
+      if (month.length < 2) {
+        month = "0" + month;
       }
-    }
 
-    if (whiteSpace === inputText.length) {
-      setError({ status: 400, msg: "Must Type a Message to Post Comment..." });
-    } else {
-      setComments((currentComments) => {
-        const date = new Date();
+      if (day.length < 2) {
+        day = "0" + day;
+      }
 
-        let month = date.getMonth().toString();
-        let day = date.getDate().toString();
+      const today = `${date.getFullYear()}-${month}-${day}`;
 
-        if (month.length < 2) {
-          month = "0" + month;
-        }
+      const userComment = {
+        comment_id: "optimisticRender",
+        article_id: article_id,
+        author: loggedInUser.username,
+        body: addCommentInput,
+        created_at: today,
+        votes: 0,
+      };
 
-        if (day.length < 2) {
-          day = "0" + day;
-        }
+      return [userComment, ...currentComments];
+    });
 
-        const today = `${date.getFullYear()}-${month}-${day}`;
-
-        const userComment = {
-          comment_id: "optimisticRender",
-          article_id: article_id,
-          author: loggedInUser.username,
-          body: addCommentInput,
-          created_at: today,
-          votes: 0,
-        };
-
-        return [userComment, ...currentComments];
-      });
-
-      postCommentByID(loggedInUser.username, addCommentInput, article_id).catch(
-        () => {
-          setComments((currentComments) => {
-            const newComments = [...currentComments].filter(
-              (comment) => comment.comment_id !== "optimisticRender"
-            );
-            return newComments;
-          });
-          setError({
-            status: 400,
-            msg: "Error Adding Comment. Please Post Comment Again...",
-          });
-        }
-      );
-    }
+    postCommentByID(loggedInUser.username, addCommentInput, article_id).catch(
+      () => {
+        setComments((currentComments) => {
+          const newComments = [...currentComments].filter(
+            (comment) => comment.comment_id !== "optimisticRender"
+          );
+          return newComments;
+        });
+        setError({
+          status: 400,
+          msg: "Error Adding Comment. Please Post Comment Again...",
+        });
+      }
+    );
   };
 
   const handleDeleteComment = (clickedComment) => {
@@ -104,7 +99,8 @@ const Comment = ({ commentCount, article_id }) => {
       );
       return optimisticComment;
     });
-    deleteCommentByCommentID(clickedComment.comment_id).catch(() => {
+    deleteCommentByCommentID(clickedComment.comment_id).catch((error) => {
+      console.log(error);
       setComments((currentComments) => {
         const reverseDelete = [clickedComment, ...currentComments];
 
