@@ -2,12 +2,12 @@ import { useState, useEffect, useContext } from "react";
 import {
   getCommentsByID,
   postCommentByID,
-  deleteCommentByCommentID,
 } from "../Api";
 import { UserContext } from "../context/UserContext";
 import Pagination from "./Pagination";
 import Vote from "./Vote";
 import { checkIsBlank } from "../utils/utils";
+import Delete from "./Delete";
 
 const Comment = ({ commentCount, article_id }) => {
   const [comments, setComments] = useState([]);
@@ -91,28 +91,6 @@ const Comment = ({ commentCount, article_id }) => {
     );
   };
 
-  const handleDeleteComment = (clickedComment) => {
-    setError(false);
-    setComments((currentComments) => {
-      const optimisticComment = [...currentComments].filter(
-        (comment) => comment.comment_id !== clickedComment.comment_id
-      );
-      return optimisticComment;
-    });
-    deleteCommentByCommentID(clickedComment.comment_id).catch((error) => {
-      console.log(error);
-      setComments((currentComments) => {
-        const reverseDelete = [clickedComment, ...currentComments];
-
-        return reverseDelete;
-      });
-      setError({
-        status: 400,
-        msg: "Error Deleting Comment. Please Delete Comment Again...",
-      });
-    });
-  };
-
   useEffect(() => {
     load();
     // eslint-disable-next-line
@@ -158,16 +136,17 @@ const Comment = ({ commentCount, article_id }) => {
                 </p>
                 <h3>{comment.author}</h3>
                 <p>{comment.body}</p>
+
                 {comment.author === loggedInUser.username ? (
-                  <button
-                    onClick={() => {
-                      handleDeleteComment(comment);
-                    }}
-                    className="deleteButton"
-                  >
-                    Delete
-                  </button>
+                  <Delete
+                    type="comment"
+                    id={comment.comment_id}
+                    arrayList={comments}
+                    setArrayList={setComments}
+                    setError={setError}
+                  />
                 ) : null}
+
                 <Vote
                   type="comment"
                   votes={comment.votes}

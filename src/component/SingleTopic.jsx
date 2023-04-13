@@ -1,9 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getArticlesByTopic } from "../Api";
 import Pagination from "./Pagination";
+import Delete from "./Delete";
+import { UserContext } from "../context/UserContext";
 
 const SingleTopic = () => {
+  const { loggedInUser } = useContext(UserContext);
   const { topic } = useParams();
   const [filteredArticles, setFilteredArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -118,6 +121,15 @@ const SingleTopic = () => {
                 >
                   READ
                 </Link>
+                {article.author === loggedInUser.username ? (
+                  <Delete
+                    type="article"
+                    id={article.article_id}
+                    arrayList={filteredArticles}
+                    setArrayList={setFilteredArticles}
+                    setError={setError}
+                  />
+                ) : null}
               </section>
             </li>
           );
