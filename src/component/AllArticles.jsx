@@ -1,9 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { getArticles } from "../Api";
 import { Link } from "react-router-dom";
+import Delete from "./Delete";
 import Pagination from "./Pagination";
+import { UserContext } from "../context/UserContext";
 
 const AllArticles = () => {
+  const { loggedInUser } = useContext(UserContext);
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [order, setOrder] = useState("DESC");
@@ -100,6 +103,15 @@ const AllArticles = () => {
                 >
                   READ
                 </Link>
+                {article.author === loggedInUser.username ? (
+                  <Delete
+                    type="article"
+                    id={article.article_id}
+                    arrayList={articles}
+                    setArrayList={setArticles}
+                    setError={setError}
+                  />
+                ) : null}
               </section>
             </li>
           );

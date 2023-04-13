@@ -1,6 +1,5 @@
 const axios = require("axios");
-// const hostDomain = "https://ncnews-guy.cyclic.app";
-const hostDomain = "http://localhost:9090";
+const hostDomain = "https://ncnews-guy.cyclic.app";
 
 export const getArticles = (sortBy, order, p) => {
   return axios
@@ -77,4 +76,8 @@ export const postNewArticle = (author, title, body, topic) => {
     .then(({ data }) => {
       return data;
     });
+};
+
+export const deleteArticleById = (article_id) => {
+  return axios.delete(`${hostDomain}/api/articles/${article_id}`);
 };
