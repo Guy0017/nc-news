@@ -55,7 +55,7 @@ const PostArticle = () => {
             setSubmitted(true);
             clearForm();
           })
-          .catch(() => {
+          .catch((error) => {
             if (error.message === "Network Error") {
               setError({
                 msg: error.message,
@@ -73,7 +73,7 @@ const PostArticle = () => {
           setSubmitted(true);
           clearForm();
         })
-        .catch(() => {
+        .catch((error) => {
           if (error.message === "Network Error") {
             setError({
               msg: error.message,
