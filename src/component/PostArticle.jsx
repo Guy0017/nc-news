@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { getAllTopics, postNewArticle } from "../Api";
+import { addNewTopic, getAllTopics, postNewArticle } from "../Api";
 import { UserContext } from "../context/UserContext";
 import { checkIsBlank } from "../utils/utils";
 
@@ -11,7 +11,10 @@ const PostArticle = () => {
   const [selectedTopic, setSelectedTopic] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(false);
+  const [slug, setSlug] = useState("");
+  const [description, setDescription] = useState("");
   const author = loggedInUser.username;
+  const topic = selectedTopic === "newTopic" ? slug : selectedTopic;
 
   const load = () => {
     getAllTopics()
@@ -45,16 +48,51 @@ const PostArticle = () => {
       return;
     }
 
-    postNewArticle(author, title, body, selectedTopic)
-      .then(() => {
-        setSubmitted(true);
-        setTitle("");
-        setSelectedTopic("");
-        setBody("");
-      })
-      .catch(() => {
-        setError({ msg: "Connection Error, Please Try Again" });
+    if (selectedTopic === "newTopic") {
+      addNewTopic(slug, description).then(() => {
+        postNewArticle(author, title, body, topic)
+          .then(() => {
+            setSubmitted(true);
+            clearForm();
+          })
+          .catch(() => {
+            if (error.message === "Network Error") {
+              setError({
+                msg: error.message,
+              });
+            }
+
+            setError({
+              msg: `Status ${error.response.status}: ${error.response.data.msg}`,
+            });
+          });
       });
+    } else {
+      postNewArticle(author, title, body, topic)
+        .then(() => {
+          setSubmitted(true);
+          clearForm();
+        })
+        .catch(() => {
+          if (error.message === "Network Error") {
+            setError({
+              msg: error.message,
+            });
+          }
+
+          setError({
+            msg: `Status ${error.response.status}: ${error.response.data.msg}`,
+          });
+        });
+    }
+  };
+
+  const clearForm = () => {
+    setTitle("");
+    setSelectedTopic("");
+    setBody("");
+    setSlug("");
+    setDescription("");
   };
 
   useEffect(() => {
@@ -104,6 +142,31 @@ const PostArticle = () => {
               </option>
             </select>
             {error ? <p className="ErrorMsg"> {error.msg} </p> : null}
+            {selectedTopic === "newTopic" ? (
+              <>
+                {" "}
+                <br />
+                <br />
+                <label>New Topic Name: </label> <br />
+                <input
+                  type="text"
+                  value={slug}
+                  onChange={(e) => setSlug(e.target.value)}
+                  required
+                ></input>
+                <br />
+                <br />
+                <label>New Topic Description: </label> <br />
+                <textarea
+                  value={description}
+                  cols="45"
+                  rows="5"
+                  placeholder="Enter new topic description"
+                  required
+                  onChange={(e) => setDescription(e.target.value)}
+                ></textarea>
+              </>
+            ) : null}
             <br />
             <br />
             <label>Article: </label> <br />
@@ -114,9 +177,7 @@ const PostArticle = () => {
               placeholder="Enter your details"
               required
               onChange={(e) => setBody(e.target.value)}
-            >
-              Post
-            </textarea>
+            ></textarea>
             <br />
             <br />
             <button className="postArticle--button">Submit</button>
