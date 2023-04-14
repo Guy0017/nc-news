@@ -1,6 +1,5 @@
 const axios = require("axios");
-// const hostDomain = "https://ncnews-guy.cyclic.app";
-const hostDomain = "http://localhost:9090";
+const hostDomain = "https://ncnews-guy.cyclic.app";
 
 export const getArticles = (sortBy, order, p) => {
   return axios
