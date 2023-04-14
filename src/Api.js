@@ -81,3 +81,10 @@ export const postNewArticle = (author, title, body, topic) => {
 export const deleteArticleById = (article_id) => {
   return axios.delete(`${hostDomain}/api/articles/${article_id}`);
 };
+
+export const addNewTopic = (slug, description) => {
+  return axios.post(`${hostDomain}/api/topics`, {
+    slug,
+    description,
+  });
+};
