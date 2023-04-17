@@ -7,8 +7,10 @@ It has the following functionality:
 - Change logged in user from list of all users. This list is in alphabetical order. A user is assigned by default when app is first loaded
 - Articles can be filtered by topic and sorted by category in ascending or descending order
 - Add comment to an article under the logged in username
-- Delete comments that are posted by the logged in user
-- Upvote or downvote an article
+- Add new article and new topic under the logged in username
+- Delete comments or articles that are posted by the logged in user
+- Upvote or downvote an article or comment
+- Pagination of comments and articles (limit 10 default)
 
 This frontend project is hosted on Netlify: https://ncnews-guy.netlify.app/
 
